@@ -5,17 +5,28 @@ import { useRouter } from "next/navigation";
 
 interface Props {
   children: React.ReactNode;
+  onClose?: () => void;
 }
 
-const Modal = ({ children }: Props) => {
+const Modal = ({ children, onClose }: Props) => {
   const router = useRouter();
-  const close = () => router.back();
+  const close = () => {
+    if (onClose) {
+      onClose();
+    } else {
+      router.back();
+    }
+  };
 
   return (
     <div className={css.backdrop}>
       <div className={css.modal}>
         {children}
-        <button className={css.button} onClick={close}>X</button>
+        {!onClose && (
+          <button className={css.button} onClick={close}>
+            X
+          </button>
+        )}
       </div>
     </div>
   );

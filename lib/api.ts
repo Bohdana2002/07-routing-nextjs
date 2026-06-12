@@ -11,9 +11,10 @@ export const fetchNotes = async (
   query: string,
   page: number,
   perPage: number,
+  tag?: string,
 ): Promise<NoteResponse> => {
   const { data } = await axios.get<NoteResponse>("/notes", {
-    params: { search: query, page, perPage },
+    params: { search: query, page, perPage, tag },
     headers: {
       Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
     },

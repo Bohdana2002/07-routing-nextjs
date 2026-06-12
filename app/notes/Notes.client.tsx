@@ -13,13 +13,16 @@ import SearchBox from "@/components/SearchBox/SearchBox";
 import NoteList from "@/components/NoteList/NoteList";
 import css from "./NotesClient.module.css";
 
-const NotesClient = () => {
+interface Props {
+  tag?: string;
+}
+const NotesClient = ({ tag }: Props) => {
   const [query, setQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data, isError, isLoading } = useQuery({
-    queryKey: ["notes", query, currentPage, 12],
-    queryFn: () => fetchNotes(query, currentPage, 12),
+    queryKey: ["notes", query, currentPage, 12, tag],
+    queryFn: () => fetchNotes(query, currentPage, 12, tag),
     placeholderData: keepPreviousData,
   });
 
@@ -37,7 +40,7 @@ const NotesClient = () => {
   return (
     <>
       <div>
-        <header>
+        <header className={css.header}>
           <SearchBox searchNote={debouncedSearch} />
           {totalPages > 1 && (
             <Pagination
