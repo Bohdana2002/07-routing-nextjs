@@ -30,6 +30,7 @@ export default function RootLayout({
       <body>
         <TanStackProvider>
           <Header />
+
           <main>{children}</main>
           <Footer />
         </TanStackProvider>

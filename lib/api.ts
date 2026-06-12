@@ -46,3 +46,13 @@ export const fetchNoteById = async (noteId: Note["id"]): Promise<Note> => {
   });
   return data;
 };
+
+export const getNotesByTag = async (tag?: string): Promise<NoteResponse> => {
+  const { data } = await axios.get<NoteResponse>("/notes", {
+    params: { tag },
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
+    },
+  });
+  return data;
+};
