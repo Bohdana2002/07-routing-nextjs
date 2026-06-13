@@ -7,14 +7,18 @@ import Modal from "@/components/Modal/Modal";
 
 const NotePreviewClient = () => {
   const { id } = useParams<{ id: string }>();
-  const { data: note } = useQuery({
+  const {
+    data: note,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["note", id],
     queryFn: () => fetchNoteById(id),
     refetchOnMount: false,
   });
-
+  if (isLoading) return <p>Loading, please wait...</p>;
+  if (isError) return <p>Something went wrong.</p>;
   if (!note) return null;
-
   return (
     <Modal>
       <div className={css.container}>
